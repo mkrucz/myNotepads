@@ -1,0 +1,85 @@
+/*const is variable that is constant - its cannot be changed
+ (except in object - it's properties can me modified
+ BUT NOT A TYPE, I MUST STAY AN OBJECT)*/
+const przykladowaStala = 30;
+/*let (or var) is variable, it is a container for a float, number,
+ string or boolean. var or let is changeable in later code*/
+let przykladowaZmienna = "Januszek";
+/*object can have properties or methods, parameters within an object is called properties. 
+object can have methods - a function working in or with an object*/
+const przykladowyObiekt = {
+  firstName: "Jamie",
+  lastName: "Doe",
+  age: 29,
+  isMarried: false,
+  przykladowaMetoda: () => "Hello",
+
+  /*to call an property within an object, i can use "this." but syntax cant be an arrow function, but classical way ("function() {...}") like: */
+
+  przykladowaMetoda2: function () {
+    return "Hello, my name is" + this.firstName;
+  },
+
+  //if i want to use space or dash in name of an property, i can use it as a string like this:
+  "middle name": "Damien",
+};
+//but if i want to call this property i must use square brackets
+console.log(przykladowyObiekt["middle name"]);
+
+//i can add an property to an object by this:
+przykladowyObiekt.email = "jamie@example.com";
+//or this:
+przykladowyObiekt["e-mail"] = "jamie@example.com";
+//and call an property like this:
+console.log(przykladowyObiekt.przykladowaMetoda());
+
+//i can transform object to a JSON notation by stringify like this:
+let exampleJSON = JSON.stringify(przykladowyObiekt);
+//but we can't interact with JSONs like with objescts - JSON is for example for sending data
+//and - if it's correct - transform JSON into a JavaScript object with parse
+let exampleJsObj = JSON.parse(exampleJSON);
+
+//in postman i can get response by:
+pm.response;
+//and there can be .text, .json or something else. in .json case, i's parsed automatically
+pm.response.json();
+//i can then define it as constant
+const response = pm.response.json();
+
+//when i want to make test in postman i use pm.test
+pm.test("Message displayed in test", () => {
+  //when i make test i can use some functions of postman like "expect"
+  pm.expect(response.status)
+    // and continue it by call to check is it's equal to something
+    .is.eql("UP");
+});
+//and results of the test will be visible in "test results" in postman
+
+//ARRAYS can store many different types of data even different arrays, example:
+const array = [5, "James", {}, []];
+//arrays are helpful in dealing with big chunks of data - like objects
+
+let array2 = [
+  {
+    firstName: "Jamie",
+    lastName: "Doe",
+    age: 29,
+    isMarried: false,
+    hobbies: ["soccer", "yoga"],
+  },
+
+  {
+    firstName: "Joey",
+    lastName: "Doe",
+    age: 31,
+    isMarried: false,
+    hobbies: ["equestrian", "hockey"],
+  },
+];
+//navigating in objects and arrays is done like this (REMEMBER, IN PROGRAMMING COUNTING STARTS WITH 0!):
+console.log(array2[1].hobbies[1]); // - you will get "hockey" as an answer
+
+//if you want to call data from array within an array, do it like this
+let array2 = [1, 2, (3)[(4, 5)]];
+
+console.log(array2[3][0]);
