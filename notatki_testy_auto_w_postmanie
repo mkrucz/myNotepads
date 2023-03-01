@@ -1,0 +1,44 @@
+//when i want to check for a status code of a response i use this snippet
+pm.test("status is ok", () =>
+  //arrow CALLBACK FUNCTION simplifies code
+  {
+    pm.response.to.have.status(200); //for checking if status is 200 OK
+  }
+);
+
+//when i want to check JSON response for something EXACTLY i'm looking for, i'm parsing json and i use pm.EXPECT:
+
+pm.test("string check", () => {
+  const response = pm.response.json();
+  pm.expect(response.path).to.eql("something"); //string
+  //or
+  pm.expect(response.path).to.eql(20); //number
+  //or
+  pm.expect(response.path).to.be.true; //(or false) boolean
+
+  //but when i want only to be some type, but not exactly something i can use this:
+
+  pm.expect(response.path).to.be.a("string"); //for string
+  //or
+  pm.expect(response.path).to.be.a("number"); //for number
+
+  //or check an entire array if it is an object
+
+  pm.expect([response]).to.be.an("object");
+});
+
+//if i'm using something (like pm.response.json()) in more than one test, i can make it a global variable
+
+const response1 = pm.response.json();
+
+//i can have response which have 'quotes' within a 'quotes' like 'is 'banana' a banana?'. in this case i can do this
+
+pm.expect(response.path).to.eql("is 'banana' a banana?");
+
+//or just use double quotes
+
+pm.expect(response.path).to.eql("is 'banana' a banana?");
+
+//but when i don't have to have an exactly that string i can use:
+
+pm.expect(response.path).to.have.string("is 'banana'");
