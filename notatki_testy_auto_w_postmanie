@@ -42,3 +42,39 @@ pm.expect(response.path).to.eql("is 'banana' a banana?");
 //but when i don't have to have an exactly that string i can use:
 
 pm.expect(response.path).to.have.string("is 'banana'");
+
+//If i want to make a variable in script (like eg. in tests) i can use the method for defining variables in scripts
+
+pm.globals.set("variableName", "variableValue"); //for global
+
+pm.collectionVariables.set("variableName", "variableValue"); //for collection
+
+pm.environment.set("variableName", "variableValue"); //for environment
+
+pm.variables.set("variableName", "variableValue"); //for local
+
+//for getting variables i use similar way, but with .get, like:
+
+pm.globals.get("variableName");
+
+//if i have to use dynamic variable, i use .replaceIn, like:
+
+pm.variables.replaceIn("{{$randomFirstName}}");
+
+//i can also delete variable, so - unset. it goes like this:
+
+pm.variables.unset("variableName");
+
+//i can use it to set variable with data from response like in this code:
+
+const responseforvar = pm.response.json();
+
+pm.globals.set("boardId", responseforvar.id);
+
+//Tools for parsing the response body
+
+pm.response.json(); //for JSON
+xml2json(responseBody); //for XML
+cheerio(pm.response.text()); //for HTML
+pm.response.text(); //for Plain-text
+csv - parse / lib / sync; //for CSV

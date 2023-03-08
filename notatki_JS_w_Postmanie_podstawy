@@ -95,3 +95,87 @@ numbers.push(8); //adds new element to an end of an array
 numbers.pop; //removes last element of an array and returns it (like in console.log)
 
 numbers.shift; //removes first number of an array and returns it
+
+//incrementation (adding to number - "++") is depending on placement
+
+++x //will be adding to number before returninig
+
+x++ //will be adding after returning of function
+
+//incrementation example if i want to make variable staring from one and incrememnt it from there
+
+if (currentBoardNumber) {
+  currentBoardNumber++;
+} else {
+  currentBoardNumber = 1
+}
+
+//above i have example of conditionals. there are 3 basic conditionals: if, else, else if. here's an example code with them:
+
+let x
+
+if ( x > 11 ) {
+  console.log("greater than eleven")
+}
+else if (x < 11) {
+  console.log("smaller than eleven")
+}
+else {
+  console.log("equals 11")
+}
+
+/*there is also logical operators: 
+ && means "and"
+|| means "or"
+! means "opposite" */
+
+let y
+if (x === 10 && y === 12) {
+  console.log("something") // when x = 10 and y = 12 write "something". when one of them is not, do not execute
+}
+else if(x === 13 || y === 13){
+  console.log("something else") //when x = 13 or y = 13 write "something else". one or both of them checks? execute.
+}
+else (!(x === 15)){
+  console.log("something opposite") //when x = 15, do not execute (it will be false in boolean)
+}
+
+//only defined variable in somewhere, means it is true, but not if it's defined as false
+
+var maxNumberOfEmployeesReached = false;
+ 
+if (!maxNumberOfEmployeesReached) { //means if maxNumberOfEmployees is true
+    if (numberOfEmployees >= 10) {
+        maxNumberOfEmployeesReached = true;
+        console.log('Max number of employees reached!')}}
+
+        
+//there are 3 basic loops: for, while and forEach
+//"for" loops through a block of code number of times. it looks like this
+for (expression1; expression2; expression3) {} 
+//where expression1 is executed (one time) before code block
+//expresion2 defines the condition for executing the code block
+//expression3 is executed (every time) after the code block
+
+for (let i = 0; i < 5; i++) { 
+  console.log("the number is" + i)
+}
+//expression1 sets variable i as 0, expression2 sets loop to end before i reaches 5, expression3 increments i
+//every iteration logs the number in console
+
+//"while" loop runs the code block as long as as a specified condition is true
+
+let i = 5
+
+while (i < 10) {
+  console.log("the number is" + i);
+  i++;
+}
+//code will be showing text with number and increments number until it reaches 9
+
+//"forEach" calls a function for each element in an array
+
+let letters = ["a", "b", "c"]
+
+letters.forEach(console.log(letters.letter))
+
