@@ -71,6 +71,10 @@ const responseforvar = pm.response.json();
 
 pm.globals.set("boardId", responseforvar.id);
 
+//if i want to use variable in json body in double quotes, i use it like this
+
+"language": "{{variableName}}" //yes - with curly brackets, like that
+
 //Tools for parsing the response body
 
 pm.response.json(); //for JSON
@@ -78,3 +82,29 @@ xml2json(responseBody); //for XML
 cheerio(pm.response.text()); //for HTML
 pm.response.text(); //for Plain-text
 csv - parse / lib / sync; //for CSV
+
+//IMPORTANT - eql is different than equal
+equal //is checking if an object is strictly the same object - STAY AWAY IF POSSIBLE
+eql //is checking if object have the same value as an typed object (deep equal)
+
+//if i want to revert an assertion, i can use "not", like:
+pm.expect(b).to.not.eql(a); //will output test pass for every value in b except that which is equal to a value
+// i can also expect an "empty":
+pm.expect([]).to.be.empty //it's the same as pm.expect([].letters).to.eql(0)
+pm.expect(null).to.be.null //or null
+pm.expect(undefined).to.be.undefined; // or undefined
+pm.expect(1, 2, 3).to.include(2);//or include something
+pm.expect(a).to.be.oneOf(a, b, c); //or be one of objects
+//or in case of a string - to start with something
+pm.expect('John Doe').to.match(/^John/);
+//also i can check if it's "at.least", "above", "below", "at.most", "within", have "lengthOf"
+
+//to parse header from response, use:
+pm.response.headers.get('headerName') //in brackets put name of header
+
+pm.response.to.have.header('headerName') //to test if header exists
+pm.expect(pm.response.headers.get('headerName')).to.eql('headerValue') //to test if header have expected value
+
+pm.response.cookies.has('cookieName').to.be.true //check if cookie exists
+
+pm.expect(pm.response.cookies.get('cookieName')).to.eql('cookieValue') //check if cookie have expected value

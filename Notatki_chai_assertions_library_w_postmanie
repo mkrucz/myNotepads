@@ -1,0 +1,34 @@
+//IMPORTANT - eql is different than equal
+equal; //is checking if an object is strictly the same object - STAY AWAY IF POSSIBLE
+eql; //is checking if object have the same value as an typed object (deep equal)
+
+//if i want to revert an assertion, i can use "not", like:
+pm.expect(b).to.not.eql(a); //will output test pass for every value in b except that which is equal to a value
+// i can also expect an "empty":
+pm.expect([]).to.be.empty; //it's the same as pm.expect([].letters).to.eql(0)
+pm.expect(null).to.be.null; //or null
+pm.expect(undefined).to.be.undefined; // or undefined
+pm.expect(1, 2, 3).to.include(2); //or include something
+pm.expect(a).to.be.oneOf(a, b, c); //or be one of objects
+//or in case of a string - to start with something
+pm.expect("John Doe").to.match(/^John/);
+//also i can check if it's "at.least", "above", "below", "at.most", "within", have "lengthOf"
+
+//REMEMBER - make sure that object name or array name don't have special characters.
+//if so, use square brackets and write it like a string
+["something"];
+
+//if i want to make test not exactly expect value on specific array or object key number, but just to have it, i can use .include:
+
+pm.expect(example5.array).to.include("Cars");
+
+//an ellegant way to iterate over arays (like for..of/in) is "find" function - it will iterate for finding an specified value.
+const response = pm.response.json();
+//in below function if "find" will find item with "Jane" it will give it var person
+const person = response.find((item) => item.name === "Jane"); //"item" will iterate for every thing in array with condition in double quotes
+pm.test("Person is Jane", () => {
+  pm.expect(person.name).to.eql("Jane");
+  pm.expect(person.age).to.eql(29);
+  pm.expect(person.other.email).to.eql("jane@example.com");
+  pm.expect(person.other["social-media"]).to.include("Instagram");
+});

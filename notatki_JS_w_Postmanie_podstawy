@@ -26,6 +26,17 @@ const przykladowyObiekt = {
 //but if i want to call this property i must use square brackets
 console.log(przykladowyObiekt["middle name"]);
 
+//Callback function is function that have to be executed after of if other function is executed or specified event happen. 
+setTimeout() //is an example of that type of function
+
+//arrow function is the same as anonymous function in a variable. So:
+
+let exampleVar = () => {}
+//is the same as
+let exampleVar2 = function () {}
+//and i can like that make an oneliner like:
+let add = (a, b) => a + b //it's short for return a+b and without braces :>
+
 //i can add an property to an object by this:
 przykladowyObiekt.email = "jamie@example.com";
 //or this:
@@ -160,8 +171,16 @@ for (expression1; expression2; expression3) {}
 for (let i = 0; i < 5; i++) { 
   console.log("the number is" + i)
 }
+
+for (let i = 0; i < array.length; i++) {} //example of an for loop which executes code for each item in an array (like in forEach)
+
 //expression1 sets variable i as 0, expression2 sets loop to end before i reaches 5, expression3 increments i
 //every iteration logs the number in console
+//there is also "for...of" which is just an ordinary "for", but with a specified iterable data structure (with arrays, strings etc.)
+for (let example of json.path.to.array) {}
+/*and "for...in" which executes on every item in an enumerable object. it is like forEach, but for objects, because objects don't have
+access to forEach loop*/
+for (let key in object) {}
 
 //"while" loop runs the code block as long as as a specified condition is true
 
@@ -179,3 +198,11 @@ let letters = ["a", "b", "c"]
 
 letters.forEach(console.log(letters.letter))
 
+//if i want to check for a type of an item, i can type "typeof" before something, and it will return type of an item. Like:
+console.log(typeof letters)
+
+//if i want to check if some object has property of some name/type, i can use hasOwnProperty, and it will return true or false like this:
+if (path.hasOwnProperty('propertyName')) {}
+
+//if some object have crazy name like '54bba24af6196bd5f824e563" and it returns syntax error, i can use [] brackets like
+let path = response.path["54bba24af6196bd5f824e563"].something
