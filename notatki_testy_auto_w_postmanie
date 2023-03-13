@@ -108,3 +108,8 @@ pm.expect(pm.response.headers.get('headerName')).to.eql('headerValue') //to test
 pm.response.cookies.has('cookieName').to.be.true //check if cookie exists
 
 pm.expect(pm.response.cookies.get('cookieName')).to.eql('cookieValue') //check if cookie have expected value
+
+//if i want to make a custom request workflow in a collection runner, i can use:
+postman.setNextRequest("requestName");
+//or to stop a workflow i use
+postman.setNextRequest(null);

@@ -1,0 +1,21 @@
+NEWMAN DOCUMENTATION
+https://github.com/postmanlabs/newman
+
+//to check if i have correctly installed nodeJS and npm by checking their version:
+node -v
+
+//to check version of newman
+newman -v
+
+if i want to run a collection in newman
+newman run .path.to.collection.or.postman.API.collection.link
+
+if i want to add environment after the path or link i add --envinronment .path.or.link
+
+in jenkins i can make use of reporters, which jenkins can read and use for generating reporters (json,cli,junit,html). it goes like this:
+-- reporters cli,junit (no spaces between)
+and if i want to export the xml with reported data i use
+--reporter-junit-export "path/for/file.xml" (example newman/report.xml)
+
+there is an better html reporter called htmlextra, it's needed to install it before exeution on server with jenkins by
+npm install -g newman-reporter-htmlextra
