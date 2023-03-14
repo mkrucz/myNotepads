@@ -65,6 +65,14 @@ pm.variables.replaceIn("{{$randomFirstName}}");
 
 pm.variables.unset("variableName");
 
+pm.variables.has("variableName"); //check if variable exists in current scope
+
+pm.variables.toObject() /*Return an object containing all variables 
+with their values in the current scope. 
+Based on the order of precedence, this will contain variables from multiple scopes.*/
+
+pm.variables.clear(); //clears all variables
+
 //i can use it to set variable with data from response like in this code:
 
 const responseforvar = pm.response.json();
@@ -136,12 +144,12 @@ function getNextRequest() {
         routes = pm.iterationData.get("routes"); //it's getting the routes variable from data file
     }
     
-    const nextRequest = routes.shift();
+    const nextRequest = routes.shift(); //removes first element from routes and returns it, so nextRequest have value of first element
     pm.globals.set("remainingRoutes", routes);
     
-    if (nextRequest === undefined) {
-        pm.globals.clear("remainingRoutes");
-        return null;
+    if (nextRequest === undefined) {//if nextRequest don't have value, code executes
+        pm.globals.clear("remainingRoutes");// clears value of remainingRoutes - its the same to unset (idk why it is used instead of unset ¯\_(ツ)_/¯
+        return null; //returns null in a setNextRequest - it stops an execution, runner stops request running.
     }
     
     return nextRequest;
@@ -173,3 +181,5 @@ function getNextRequest() {
       ]
   }
 ]
+/*If i need to start not from first request, but from another, i will need to make dummy request with this code, if not,
+i can run it from Tests tab in collection*/ 
