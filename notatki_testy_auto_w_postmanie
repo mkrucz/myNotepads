@@ -110,6 +110,66 @@ pm.response.cookies.has('cookieName').to.be.true //check if cookie exists
 pm.expect(pm.response.cookies.get('cookieName')).to.eql('cookieValue') //check if cookie have expected value
 
 //if i want to make a custom request workflow in a collection runner, i can use:
-postman.setNextRequest("requestName");
+postman.setNextRequest("requestName"); //or i can put requestId  
 //or to stop a workflow i use
 postman.setNextRequest(null);
+//above command can be placed wherever in the code - in prereq script or in tests, it doesn't really matter
+
+//when i plan to use a json file with data in collection runner, i can use variables which are in the file using iterationData
+pm.iterationData.get("value");
+//there are also more possibilities with that function: 
+pm.iterationData.has("variableName:String") //check whether a variable with the specified name exists in iteration data
+pm.iterationData.get("variableName:String") //return a variable with specified name from iteration data
+pm.iterationData.toObject() //return an iteration data variables in an object form
+pm.iterationData.toJSON() //return an iteration data object to JSON format
+pm.iterationData.unset("key:String") //remove the specified variable
+
+//here is an example of code with purpose of running requests in an order specified in data file. the file is called router
+
+postman.setNextRequest(getNextRequest()); //callback function to the function above
+
+function getNextRequest() {
+    let routes;
+    if (Array.isArray(pm.globals.get("remainingRoutes")) === true) {//checks if an array "remainingRoutes" is created and is an array
+        routes = pm.globals.get("remainingRoutes");//if it is, it makes "routes" value 
+    } else {
+        routes = pm.iterationData.get("routes"); //it's getting the routes variable from data file
+    }
+    
+    const nextRequest = routes.shift();
+    pm.globals.set("remainingRoutes", routes);
+    
+    if (nextRequest === undefined) {
+        pm.globals.clear("remainingRoutes");
+        return null;
+    }
+    
+    return nextRequest;
+}
+// order of running is included in an array of objects with arrays named "routes"
+[
+  {
+      "routes": [
+          "Request 1",
+          "Request 2",
+          "Request 3",
+          "Request 4"
+      ]
+  },
+  {
+      "routes": [
+          "Request 1",
+          "Request 3",
+          "Request 2",
+          "Request 4"
+      ]
+  },
+  {
+      "routes": [
+          "Request 1",
+          "Request 2",
+          "Request 4",
+          "Request 3"
+      ]
+  }
+]
