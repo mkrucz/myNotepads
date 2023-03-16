@@ -1,0 +1,8 @@
+BASIC AUTH
+Client: header - "Authorization: Basic username:password" (Base64 encoded, not so secure)
+Server: Status code 401 unauthorized, Response header: WWW-Authenticate: Basic Realm="Users"
+
+LEGACY AUTH (form based/session based)
+i need to log in in browser, next i need to locate cookie file and copy as a cURL
+next i need to import cURL to postman (import->as a raw text)
+next i need to remove session info from header "cookies" and look for section "cookies" in postman  to check if there are any cookies i need to remove

@@ -43,6 +43,12 @@ pm.expect(response.path).to.eql("is 'banana' a banana?");
 
 pm.expect(response.path).to.have.string("is 'banana'");
 
+//if i want to check the response time i can use 
+
+pm.response.responseTime()
+//so if i want to check if response time was below some limit i use:
+pm.expect(pm.response.responseTime).to.be.below("value:number")
+
 //If i want to make a variable in script (like eg. in tests) i can use the method for defining variables in scripts
 
 pm.globals.set("variableName", "variableValue"); //for global
@@ -132,6 +138,8 @@ pm.iterationData.toObject() //return an iteration data variables in an object fo
 pm.iterationData.toJSON() //return an iteration data object to JSON format
 pm.iterationData.unset("key:String") //remove the specified variable
 
+//if i want to use a value specified in data file in body, query params or path, i simply use double curly brackets like in a collection variable
+
 //here is an example of code with purpose of running requests in an order specified in data file. the file is called router
 
 postman.setNextRequest(getNextRequest()); //callback function to the function above
@@ -183,3 +191,51 @@ function getNextRequest() {
 ]
 /*If i need to start not from first request, but from another, i will need to make dummy request with this code, if not,
 i can run it from Tests tab in collection*/ 
+
+//when i have some common tests (like status check, header check etc.) i can place them in an anonymous function, or in a variable,
+// and call it if i need
+
+let CommonTests = () => {
+    pm.test("status code ok", () => {
+        pm.response.to.have.status(200);
+    })
+
+    pm.test("header ok", () => {
+        pm.response.to.have.header("Content-Type");
+    })
+
+    pm.test("response time less than 300ms", () =>
+    {
+        pm.expect(pm.response.responseTime).to.be.below(300);
+    })
+}
+
+CommonTests()
+//and set it to a postman variable
+pm.environment.set("commonTests", CommonTests.toString()); //i need to parse it to string to save it
+//and use eval() to evaluate string and run it as a script
+eval(pm.environment.get("commonTests"))(); //using eval is risky, but i don't know any alternative
+
+//If i want to parse CSV response, i can use PapaLibrary
+//here is code block from postman course, i can use it as an example
+
+eval(pm.globals.get("PapaLibrary"));
+let Papa = this.Papa
+
+const parserConfig = {
+    header: true //to parse the header as well
+}
+
+let parsedBody = Papa.parse(responseBody, parserConfig);
+console.log(parsedBody) //here i have parsed the response
+
+pm.test("ABC1234 was charged properly", () => {
+    for(let invoice of parsedBody.data) {
+    console.log(invoice);
+    if (invoice.ResHash === "ABC1234") {
+        pm.expect(invoice.InvTotal).to.eql("$4,500.00")}
+    }
+})
+
+pm.globals.unset("PapaLibrary"); //for cleaning up
+
