@@ -119,7 +119,7 @@ pm.response.headers.get('headerName') //in brackets put name of header
 pm.response.to.have.header('headerName') //to test if header exists
 pm.expect(pm.response.headers.get('headerName')).to.eql('headerValue') //to test if header have expected value
 
-pm.response.cookies.has('cookieName').to.be.true //check if cookie exists
+pm.expect(pm.cookies.has("name")).to.be.true //check if cookie exists
 
 pm.expect(pm.response.cookies.get('cookieName')).to.eql('cookieValue') //check if cookie have expected value
 
@@ -238,4 +238,13 @@ pm.test("ABC1234 was charged properly", () => {
 })
 
 pm.globals.unset("PapaLibrary"); //for cleaning up
+
+//if i want to use conditional test with status code i can use 
+pm.response.code
+//like in 
+if (pm.response.code === 200) {
+    pm.test("status is ok", () => {
+        pm.response.to.have.status(200);
+    })
+}
 
